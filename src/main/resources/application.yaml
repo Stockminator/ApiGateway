@@ -1,0 +1,33 @@
+server:
+  port: 7574
+
+logging:
+  level:
+    org: DEBUG
+    org.springframework.security: DEBUG
+
+spring:
+  application.name: ApiGateway
+  security:
+    oauth2:
+      client:
+        registration:
+          keycloak:
+            client-id: stockminator
+            client-secret: ee573bb6-07c0-4e54-9c23-273e68d07f97
+            clientName: Keycloak
+            authorization-grant-type: authorization_code
+            redirect-uri: "http://localhost:7574/login/oauth2/code/{registrationId}"
+            scope:
+              - profile
+              - email
+        provider:
+          keycloak:
+            authorization-uri: http://localhost:4444/auth/realms/stockminator/protocol/openid-connect/auth
+            token-uri: http://localhost:4444/auth/realms/stockminator/protocol/openid-connect/token
+            user-info-uri: http://localhost:4444/auth/realms/stockminator/protocol/openid-connect/userinfo
+            jwk-set-uri: http://localhost:4444/auth/realms/stockminator/protocol/openid-connect/certs
+            user-name-attribute: preferred_username
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:4444/auth/realms/stockminator
